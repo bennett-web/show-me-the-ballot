@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Show Me The Ballot — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE6;
+    --border: rgba(0,0,0,0.10);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1A1A18;
+    --text-2: #6B6B65;
+    --text-3: #9E9E96;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-dark: #085041;
+    --amber: #C07A12;
+    --amber-light: #FEF3DC;
+    --coral: #C94A22;
+    --coral-light: #FAEAE4;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top nav */
+  .nav {
+    height: 52px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  .wordmark {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .wordmark em { color: var(--teal); font-style: normal; }
+  .nav-divider { width: 1px; height: 20px; background: var(--border); }
+  .nav-filters { display: flex; gap: 4px; }
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { background: var(--surface2); }
+  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .cycle-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .journalist-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.15s;
+  }
+  .journalist-btn:hover { background: var(--surface2); }
+  .lock-icon { font-size: 12px; opacity: 0.5; }
+
+  /* Layout */
+  .layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: auto 1fr;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    grid-column: 1 / 2;
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-cell {
+    flex: 1;
+    background: var(--surface);
+    padding: 14px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .stat-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-desc { font-size: 12px; color: var(--text-2); line-height: 1.4; }
+
+  /* Map panel */
+  .map-panel {
+    grid-column: 1 / 2;
+    background: var(--surface);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  #usmap {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+  }
+  .legend {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-2);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-section {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-section:last-child { border-bottom: none; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .j-access {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 9px 12px;
+  }
+  .j-access-left { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2); }
+  .j-sign-btn {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  /* State rows */
+  .state-row {
+    display: flex;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    gap: 10px;
+    transition: background 0.1s;
+    border-radius: 6px;
+    padding: 8px 6px;
+    margin: 0 -6px;
+  }
+  .state-row:hover { background: var(--surface2); }
+  .state-row:last-child { border-bottom: none; }
+  .state-tier-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-priority { background: var(--coral); }
+  .dot-watch { background: var(--amber); }
+  .dot-ready { background: var(--teal); }
+  .state-info { flex: 1; min-width: 0; }
+  .state-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .state-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); margin-top: 1px; }
+  .state-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    padding: 3px 7px;
+    border-radius: 10px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .badge-priority { background: var(--coral-light); color: var(--coral); }
+  .badge-watch { background: var(--amber-light); color: var(--amber); }
+  .badge-ready { background: var(--teal-light); color: var(--teal-dark); }
+
+  /* Alerts */
+  .alert-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .alert-row:last-child { border-bottom: none; }
+  .alert-icon-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .icon-coral { background: var(--coral-light); color: var(--coral); }
+  .icon-teal { background: var(--teal-light); color: var(--teal-dark); }
+  .icon-amber { background: var(--amber-light); color: var(--amber); }
+  .alert-body { flex: 1; min-width: 0; }
+  .alert-text { font-size: 12px; color: var(--text); line-height: 1.4; }
+  .alert-time { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); margin-top: 2px; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 12px;
+    pointer-events: none;
+    display: none;
+    min-width: 160px;
+    z-index: 100;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .tip-name { font-weight: 500; font-size: 13px; margin-bottom: 4px; }
+  .tip-row { color: var(--text-2); margin: 2px 0; font-family: 'DM Mono', monospace; font-size: 10px; }
+  .tip-alert { color: var(--coral); margin-top: 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="wordmark">show me the <em>ballot</em></span>
+  <div class="nav-divider"></div>
+  <div class="nav-filters">
+    <button class="filter-btn active" onclick="setFilter('battleground', this)">Battleground</button>
+    <button class="filter-btn" onclick="setFilter('all', this)">All states</button>
+    <button class="filter-btn" onclick="setFilter('coverage', this)">By coverage</button>
+  </div>
+  <div class="nav-right">
+    <span class="cycle-badge">Nov 2026 General</span>
+    <button class="journalist-btn"><span class="lock-icon">🔒</span> Journalist view</button>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <span class="stat-num">14</span>
+      <span class="stat-desc">States with<br>ballot data</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">312</span>
+      <span class="stat-desc">Propositions<br>indexed</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">7</span>
+      <span class="stat-desc">Coverage<br>alerts today</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num" style="color:var(--teal);">6</span>
+      <span class="stat-desc">Priority<br>battlegrounds</span>
+    </div>
+  </div>
+
+  <div class="map-panel">
+    <svg id="usmap" viewBox="0 0 960 580" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#C94A22;"></div>Priority battleground</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C07A12;"></div>Watch state</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#1D9E75;"></div>Data ready</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E8E5DE; border:1px solid #ccc;"></div>Not yet covered</div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="j-access">
+        <div class="j-access-left">🔒 Journalist access</div>
+        <button class="j-sign-btn">Sign in</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="section-label">Priority states</p>
+      <div class="state-row" onclick="zoomState('Pennsylvania')">
+        <div class="state-tier-dot dot-priority"></div>
+        <div class="state-info">
+          <div class="state-name">Pennsylvania</div>
+          <div class="state-meta">12 props · 38 sources</div>
+        </div>
+        <span class="state-badge badge-priority">Priority</span>
+      </div>
+      <div class="state-row" onclick="zoomState('Arizona')">
+        <div class="state-tier-dot dot-priority"></div>
+        <div class="state-info">
+          <div class="state-name">Arizona</div>
+          <div class="state-meta">9 props · 24 sources</div>
+        </div>
+        <span class="state-badge badge-priority">Priority</span>
+      </div>
+      <div class="state-row" onclick="zoomState('Georgia')">
+        <div class="state-tier-dot dot-priority"></div>
+        <div class="state-info">
+          <div class="state-name">Georgia</div>
+          <div class="state-meta">7 props · 19 sources</div>
+        </div>
+        <span class="state-badge badge-priority">Priority</span>
+      </div>
+      <div class="state-row" onclick="zoomState('North Carolina')">
+        <div class="state-tier-dot dot-priority"></div>
+        <div class="state-info">
+          <div class="state-name">North Carolina</div>
+          <div class="state-meta">5 props · 14 sources</div>
+        </div>
+        <span class="state-badge badge-priority">Priority</span>
+      </div>
+      <div class="state-row" onclick="zoomState('Wisconsin')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Wisconsin</div>
+          <div class="state-meta">6 props · 15 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="zoomState('Nevada')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Nevada</div>
+          <div class="state-meta">5 props · 11 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="zoomState('Florida')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Florida</div>
+          <div class="state-meta">11 props · 29 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="zoomState('Michigan')">
+        <div class="state-tier-dot dot-ready"></div>
+        <div class="state-info">
+          <div class="state-name">Michigan</div>
+          <div class="state-meta">8 props · 21 sources</div>
+        </div>
+        <span class="state-badge badge-ready">Data ready</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="section-label">Recent alerts</p>
+      <div class="alert-row">
+        <div class="alert-icon-wrap icon-coral">📰</div>
+        <div class="alert-body">
+          <div class="alert-text">PA Prop 2 coverage spike — 14 new articles in 2 hrs</div>
+          <div class="alert-time">2 hrs ago</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <div class="alert-icon-wrap icon-teal">✅</div>
+        <div class="alert-body">
+          <div class="alert-text">Arizona ballot finalized — 9 propositions added</div>
+          <div class="alert-time">5 hrs ago</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <div class="alert-icon-wrap icon-amber">▶</div>
+        <div class="alert-body">
+          <div class="alert-text">3 creator posts tagged #GAProp4 in last 24h</div>
+          <div class="alert-time">Yesterday</div>
+        </div>
+      </div>
+      <div class="alert-row">
+        <div class="alert-icon-wrap icon-coral">⚡</div>
+        <div class="alert-body">
+          <div class="alert-text">NC new filing: Constitutional amendment added to ballot</div>
+          <div class="alert-time">Yesterday</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:auto;">
+      <p class="section-label">Aggregation sources</p>
+      <div style="display:flex; flex-wrap:wrap; gap:5px;">
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">AP News</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">Reuters</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">Local TV</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">Substack</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">YouTube</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">TikTok</span>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:10px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);">+ 12 more</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="tooltip">
+  <div class="tip-name" id="tip-name"></div>
+  <div class="tip-row" id="tip-tier"></div>
+  <div class="tip-row" id="tip-props"></div>
+  <div class="tip-alert" id="tip-alert"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const stateData = {
+  'Pennsylvania':   { tier: 'priority', props: 12, sources: 38, alert: 'Coverage spike today' },
+  'Arizona':        { tier: 'priority', props: 9,  sources: 24, alert: null },
+  'Georgia':        { tier: 'priority', props: 7,  sources: 19, alert: null },
+  'North Carolina': { tier: 'priority', props: 5,  sources: 14, alert: 'New filing today' },
+  'Wisconsin':      { tier: 'watch',    props: 6,  sources: 15, alert: null },
+  'Nevada':         { tier: 'watch',    props: 5,  sources: 11, alert: null },
+  'Florida':        { tier: 'watch',    props: 11, sources: 29, alert: null },
+  'Michigan':       { tier: 'ready',    props: 8,  sources: 21, alert: null },
+  'Minnesota':      { tier: 'ready',    props: 4,  sources: 9,  alert: null },
+  'New Hampshire':  { tier: 'ready',    props: 3,  sources: 7,  alert: null },
+  'Virginia':       { tier: 'ready',    props: 6,  sources: 14, alert: null },
+};
+
+const tierColor = { priority: '#C94A22', watch: '#C07A12', ready: '#1D9E75' };
+const tierLabel = { priority: 'Priority battleground', watch: 'Watch state', ready: 'Data ready' };
+
+let currentFilter = 'battleground';
+let mapPaths = null;
+
+const svg = d3.select('#usmap');
+const g = svg.append('g');
+
+const projection = d3.geoAlbersUsa().scale(1100).translate([480, 280]);
+const path = d3.geoPath(projection);
+
+d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+  const features = topojson.feature(us, us.objects.states).features;
+
+  mapPaths = g.selectAll('path')
+    .data(features)
+    .join('path')
+    .attr('d', path)
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 0.8)
+    .attr('fill', d => {
+      const info = stateData[d.properties.name];
+      return info ? tierColor[info.tier] : '#E8E5DE';
+    })
+    .attr('opacity', d => currentFilter === 'battleground' && !stateData[d.properties.name] ? 0.35 : 1)
+    .style('cursor', d => stateData[d.properties.name] ? 'pointer' : 'default')
+    .on('mousemove', function(event, d) {
+      const info = stateData[d.properties.name];
+      const tip = document.getElementById('tooltip');
+      if (info) {
+        document.getElementById('tip-name').textContent = d.properties.name;
+        document.getElementById('tip-tier').textContent = tierLabel[info.tier];
+        document.getElementById('tip-props').textContent = info.props + ' props · ' + info.sources + ' sources';
+        document.getElementById('tip-alert').textContent = info.alert || '';
+        tip.style.display = 'block';
+        tip.style.left = (event.clientX + 14) + 'px';
+        tip.style.top = (event.clientY - 40) + 'px';
+      }
+    })
+    .on('mouseleave', function() {
+      document.getElementById('tooltip').style.display = 'none';
+    })
+    .on('click', function(event, d) {
+      if (stateData[d.properties.name]) {
+        alert('Opening ballot view for ' + d.properties.name + '…\n\n(In the real product this would load the full proposition list for this state.)');
+      }
+    });
+});
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (mapPaths) {
+    mapPaths.attr('opacity', d => {
+      if (f === 'battleground') return stateData[d.properties.name] ? 1 : 0.3;
+      if (f === 'coverage') return stateData[d.properties.name] ? 1 : 0.15;
+      return 1;
+    });
+  }
+}
+
+function zoomState(name) {
+  alert('Opening ballot view for ' + name + '…\n\n(In the real product this would load the full proposition list for this state.)');
+}
+</script>
+</body>
+</html>
