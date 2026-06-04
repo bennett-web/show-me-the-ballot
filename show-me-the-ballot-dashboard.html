@@ -72,6 +72,88 @@
   }
   .filter-btn:hover { background: var(--surface2); }
   .filter-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+  /* Nav search */
+  .nav-search-wrap {
+    flex: 1;
+    max-width: 320px;
+    position: relative;
+    margin: 0 8px;
+  }
+  .nav-search-input {
+    width: 100%;
+    padding: 5px 12px 5px 30px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .nav-search-input::placeholder { color: var(--text-3); }
+  .nav-search-input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
+    background: var(--surface);
+  }
+  .nav-search-icon {
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--teal);
+    font-size: 12px;
+    pointer-events: none;
+  }
+  .nav-autocomplete {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 260px;
+    right: 0;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    z-index: 200;
+    list-style: none;
+    overflow-y: auto;
+    max-height: 240px;
+  }
+  .nav-autocomplete.hidden { display: none; }
+  .nav-ac-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+    gap: 8px;
+  }
+  .nav-ac-item:last-child { border-bottom: none; }
+  .nav-ac-item:hover, .nav-ac-item.active { background: var(--teal-light); }
+  .nav-ac-item-label { flex: 1; }
+  .nav-ac-item-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .nav-ac-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    flex-shrink: 0;
+  }
+  .nav-ac-type.state-type { background: var(--surface2); color: var(--text-2); }
+
   .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
   .cycle-badge {
     font-family: 'DM Mono', monospace;
@@ -527,6 +609,19 @@
     <button class="filter-btn" onclick="setFilter('all', this)">All states</button>
     <button class="filter-btn" onclick="setFilter('coverage', this)">By coverage</button>
   </div>
+  <div class="nav-search-wrap">
+    <span class="nav-search-icon">⌕</span>
+    <input
+      id="nav-search"
+      class="nav-search-input"
+      type="search"
+      placeholder="Jump to state or county…"
+      autocomplete="off"
+      autocorrect="off"
+    >
+    <ul id="nav-autocomplete" class="nav-autocomplete hidden" role="listbox"></ul>
+  </div>
+
   <div class="nav-right">
     <span class="cycle-badge">Nov 2026 General</span>
     <button class="journalist-btn"><span class="lock-icon">🔒</span> Journalist view</button>
@@ -1024,6 +1119,89 @@ function setFilter(f, btn) {
     });
   }
 }
+
+// ── Nav search ────────────────────────────────────────────────────────────────
+
+function buildNavIndex() {
+  const index = [];
+  for (const [name, d] of Object.entries(stateData)) {
+    index.push({ label: name, abbr: d.abbr, type: 'state' });
+  }
+  for (const [abbr, counties] of Object.entries(stateCounties)) {
+    const stateName = abbrToName[abbr];
+    if (!stateName) continue;
+    counties.forEach(county => {
+      index.push({ label: county + ' County', sub: stateName, abbr, county, type: 'county' });
+    });
+  }
+  return index;
+}
+
+const navIndex = buildNavIndex();
+
+function matchNav(query) {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+  return navIndex
+    .filter(item => item.label.toLowerCase().includes(q) || (item.sub || '').toLowerCase().includes(q))
+    .slice(0, 10);
+}
+
+const navInput = document.getElementById('nav-search');
+const navAC = document.getElementById('nav-autocomplete');
+let navActiveIdx = -1;
+
+navInput.addEventListener('input', () => {
+  navActiveIdx = -1;
+  const results = matchNav(navInput.value);
+  navAC.innerHTML = '';
+  if (!results.length) { navAC.classList.add('hidden'); return; }
+  results.forEach((item, i) => {
+    const li = document.createElement('li');
+    li.className = 'nav-ac-item';
+    li.setAttribute('role', 'option');
+    li.innerHTML = `
+      <span class="nav-ac-item-label">${item.label}</span>
+      ${item.sub ? `<span class="nav-ac-item-sub">${item.sub}</span>` : ''}
+      <span class="nav-ac-type ${item.type === 'state' ? 'state-type' : ''}">${item.type === 'state' ? 'State' : 'County'}</span>
+    `;
+    li.addEventListener('click', () => {
+      navAC.classList.add('hidden');
+      navInput.value = '';
+      if (item.type === 'state') {
+        navigateState(item.abbr);
+      } else {
+        navigateState(item.abbr);
+        // Open county sidebar after state loads
+        setTimeout(() => openCountySidebar(item.abbr, item.county), 400);
+      }
+    });
+    navAC.appendChild(li);
+  });
+  navAC.classList.remove('hidden');
+});
+
+navInput.addEventListener('keydown', e => {
+  const items = navAC.querySelectorAll('.nav-ac-item');
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    navActiveIdx = Math.min(navActiveIdx + 1, items.length - 1);
+    items.forEach((it, i) => it.classList.toggle('active', i === navActiveIdx));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    navActiveIdx = Math.max(navActiveIdx - 1, -1);
+    items.forEach((it, i) => it.classList.toggle('active', i === navActiveIdx));
+  } else if (e.key === 'Enter' && navActiveIdx >= 0) {
+    e.preventDefault();
+    items[navActiveIdx]?.click();
+  } else if (e.key === 'Escape') {
+    navAC.classList.add('hidden');
+  }
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-search-wrap')) navAC.classList.add('hidden');
+});
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 
