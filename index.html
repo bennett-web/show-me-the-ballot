@@ -70,6 +70,23 @@
 
 </div>
 
+<!-- Journalist access link (bottom of page, unobtrusive) -->
+<button id="journalist-access-btn" style="
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--color-ready);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  transition: color 0.15s;
+" aria-label="Journalist access">For journalists</button>
+
 <!-- ── State view — county list ── -->
 <div id="view-state" class="state-page" hidden>
   <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -552,6 +569,17 @@ if (window.visualViewport) {
 // ── Language buttons ──────────────────────────────────────────────────────────
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+// ── Journalist access ─────────────────────────────────────────────────────────
+document.getElementById('journalist-access-btn').addEventListener('click', () => {
+  const pw = prompt('Enter journalist access code:');
+  if (pw === null) return;
+  if (pw === 'integrity2026') {
+    window.location.href = 'show-me-the-ballot-dashboard.html';
+  } else {
+    alert('Incorrect access code.');
+  }
 });
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
