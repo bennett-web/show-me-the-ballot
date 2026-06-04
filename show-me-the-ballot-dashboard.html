@@ -282,6 +282,222 @@
   .alert-text { font-size: 12px; color: var(--text); line-height: 1.4; }
   .alert-time { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); margin-top: 2px; }
 
+  /* Breadcrumb */
+  .breadcrumb-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-3);
+    padding: 0 24px;
+    height: 36px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .breadcrumb-bar a {
+    color: var(--text-2);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .breadcrumb-bar a:hover { color: var(--text); }
+  .breadcrumb-bar.hidden { display: none; }
+
+  /* County map panel */
+  #county-map-panel {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    background: var(--surface);
+    padding: 20px 24px;
+    z-index: 10;
+  }
+  #county-map-panel.active { display: flex; }
+  #county-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  #county-search-input {
+    flex: 1;
+    padding: 7px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--surface2);
+    color: var(--text);
+    outline: none;
+  }
+  #county-search-input:focus { border-color: var(--teal); }
+  #countymap { width: 100%; flex: 1; min-height: 0; }
+
+  /* County ballot sidebar (slides in over main sidebar) */
+  .county-sidebar {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 340px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+  }
+  .county-sidebar.open { transform: translateX(0); }
+  .county-sidebar-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .county-sidebar-title {
+    flex: 1;
+  }
+  .county-sidebar-title h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .county-sidebar-title p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .county-sidebar-close {
+    background: none;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: color 0.15s;
+  }
+  .county-sidebar-close:hover { color: var(--text); }
+  .county-sidebar-body { flex: 1; overflow-y: auto; padding: 12px 16px; }
+
+  .j-prop-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 8px;
+    background: var(--surface);
+  }
+  .j-prop-card:hover { background: var(--surface2); }
+  .j-prop-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .j-prop-id {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .j-type-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .j-type-statewide { background: var(--teal-light); color: var(--teal-dark); }
+  .j-type-local     { background: #EEF0F8; color: #3B3FA0; }
+  .j-type-candidate { background: #FEF3E8; color: #8A4E0A; }
+  .j-prop-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+  .j-prop-summary {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+  .j-prop-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .stance-select {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-2);
+    cursor: pointer;
+  }
+  .coverage-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-3);
+  }
+  .j-voter-link {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(29,158,117,0.3);
+  }
+  .j-voter-link:hover { border-color: var(--teal); }
+  .county-sidebar-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .view-full-ballot-btn {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .view-full-ballot-btn:hover { background: #168a63; }
+
+  /* County list rows (in sidebar when state is selected) */
+  .county-list-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    gap: 8px;
+    transition: background 0.1s;
+    border-bottom: 1px solid var(--border);
+  }
+  .county-list-row:last-child { border-bottom: none; }
+  .county-list-row:hover { background: var(--surface2); }
+  .county-list-name { font-size: 13px; color: var(--text); flex: 1; }
+  .county-list-arrow { color: var(--text-3); font-size: 12px; }
+
   /* Tooltip */
   #tooltip {
     position: fixed;
@@ -304,7 +520,7 @@
 <body>
 
 <nav class="nav">
-  <span class="wordmark">show me the <em>ballot</em></span>
+  <a class="wordmark" href="index.html" style="text-decoration:none;">show me the <em>ballot</em></a>
   <div class="nav-divider"></div>
   <div class="nav-filters">
     <button class="filter-btn active" onclick="setFilter('battleground', this)">Battleground</button>
@@ -317,7 +533,14 @@
   </div>
 </nav>
 
-<div class="layout">
+<!-- Breadcrumb (shown when a state is selected) -->
+<div id="breadcrumb-bar" class="breadcrumb-bar hidden">
+  <a id="bc-home" href="#">All states</a>
+  <span>›</span>
+  <span id="bc-state"></span>
+</div>
+
+<div class="layout" style="position:relative;">
 
   <div class="stats-bar">
     <div class="stat-cell">
@@ -338,8 +561,31 @@
     </div>
   </div>
 
-  <div class="map-panel">
+  <div class="map-panel" style="position:relative;">
     <svg id="usmap" viewBox="0 0 960 580" preserveAspectRatio="xMidYMid meet"></svg>
+
+    <!-- County drill-down panel (overlays the map) -->
+    <div id="county-map-panel">
+      <div id="county-search-bar">
+        <input id="county-search-input" type="search" placeholder="Search counties…" autocomplete="off">
+      </div>
+      <svg id="countymap" viewBox="0 0 960 580" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <!-- County ballot sidebar -->
+    <div id="county-sidebar" class="county-sidebar">
+      <div class="county-sidebar-header">
+        <div class="county-sidebar-title">
+          <h3 id="cs-county-name"></h3>
+          <p id="cs-state-name"></p>
+        </div>
+        <button class="county-sidebar-close" id="cs-close" aria-label="Close">✕</button>
+      </div>
+      <div class="county-sidebar-body" id="cs-body"></div>
+      <div class="county-sidebar-footer">
+        <a id="cs-voter-link" href="#" target="_blank" class="view-full-ballot-btn">View full voter ballot ›</a>
+      </div>
+    </div>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:#C94A22;"></div>Priority battleground</div>
       <div class="legend-item"><div class="legend-dot" style="background:#C07A12;"></div>Watch state</div>
@@ -356,9 +602,15 @@
       </div>
     </div>
 
-    <div class="sidebar-section">
+    <!-- Dynamic county list (shown when state is selected) -->
+    <div class="sidebar-section" id="county-list-section" style="display:none;">
+      <p class="section-label" id="county-list-label">Counties</p>
+      <div id="county-list-rows"></div>
+    </div>
+
+    <div class="sidebar-section" id="state-list-section">
       <p class="section-label">Priority states</p>
-      <div class="state-row" onclick="zoomState('Pennsylvania')">
+      <div class="state-row" onclick="navigateState('pa')">
         <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
           <div class="state-name">Pennsylvania</div>
@@ -366,7 +618,7 @@
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
-      <div class="state-row" onclick="zoomState('Arizona')">
+      <div class="state-row" onclick="navigateState('az')">
         <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
           <div class="state-name">Arizona</div>
@@ -374,7 +626,7 @@
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
-      <div class="state-row" onclick="zoomState('Georgia')">
+      <div class="state-row" onclick="navigateState('ga')">
         <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
           <div class="state-name">Georgia</div>
@@ -382,7 +634,7 @@
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
-      <div class="state-row" onclick="zoomState('North Carolina')">
+      <div class="state-row" onclick="navigateState('nc')">
         <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
           <div class="state-name">North Carolina</div>
@@ -390,7 +642,7 @@
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
-      <div class="state-row" onclick="zoomState('Wisconsin')">
+      <div class="state-row" onclick="navigateState('wi')">
         <div class="state-tier-dot dot-watch"></div>
         <div class="state-info">
           <div class="state-name">Wisconsin</div>
@@ -398,7 +650,7 @@
         </div>
         <span class="state-badge badge-watch">Watch</span>
       </div>
-      <div class="state-row" onclick="zoomState('Nevada')">
+      <div class="state-row" onclick="navigateState('nv')">
         <div class="state-tier-dot dot-watch"></div>
         <div class="state-info">
           <div class="state-name">Nevada</div>
@@ -406,7 +658,7 @@
         </div>
         <span class="state-badge badge-watch">Watch</span>
       </div>
-      <div class="state-row" onclick="zoomState('Florida')">
+      <div class="state-row" onclick="navigateState('fl')">
         <div class="state-tier-dot dot-watch"></div>
         <div class="state-info">
           <div class="state-name">Florida</div>
@@ -414,7 +666,7 @@
         </div>
         <span class="state-badge badge-watch">Watch</span>
       </div>
-      <div class="state-row" onclick="zoomState('Michigan')">
+      <div class="state-row" onclick="navigateState('mi')">
         <div class="state-tier-dot dot-ready"></div>
         <div class="state-info">
           <div class="state-name">Michigan</div>
@@ -423,6 +675,8 @@
         <span class="state-badge badge-ready">Data ready</span>
       </div>
     </div>
+
+    </div><!-- /state-list-section -->
 
     <div class="sidebar-section">
       <p class="section-label">Recent alerts</p>
@@ -482,29 +736,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+
 const stateData = {
-  'Pennsylvania':   { tier: 'priority', props: 12, sources: 38, alert: 'Coverage spike today' },
-  'Arizona':        { tier: 'priority', props: 9,  sources: 24, alert: null },
-  'Georgia':        { tier: 'priority', props: 7,  sources: 19, alert: null },
-  'North Carolina': { tier: 'priority', props: 5,  sources: 14, alert: 'New filing today' },
-  'Wisconsin':      { tier: 'watch',    props: 6,  sources: 15, alert: null },
-  'Nevada':         { tier: 'watch',    props: 5,  sources: 11, alert: null },
-  'Florida':        { tier: 'watch',    props: 11, sources: 29, alert: null },
-  'Michigan':       { tier: 'ready',    props: 8,  sources: 21, alert: null },
-  'Minnesota':      { tier: 'ready',    props: 4,  sources: 9,  alert: null },
-  'New Hampshire':  { tier: 'ready',    props: 3,  sources: 7,  alert: null },
-  'Virginia':       { tier: 'ready',    props: 6,  sources: 14, alert: null },
+  'Pennsylvania':   { abbr: 'pa', tier: 'priority', props: 12, sources: 38, alert: 'Coverage spike today' },
+  'Arizona':        { abbr: 'az', tier: 'priority', props: 9,  sources: 24, alert: null },
+  'Georgia':        { abbr: 'ga', tier: 'priority', props: 7,  sources: 19, alert: null },
+  'North Carolina': { abbr: 'nc', tier: 'priority', props: 5,  sources: 14, alert: 'New filing today' },
+  'Wisconsin':      { abbr: 'wi', tier: 'watch',    props: 6,  sources: 15, alert: null },
+  'Nevada':         { abbr: 'nv', tier: 'watch',    props: 5,  sources: 11, alert: null },
+  'Florida':        { abbr: 'fl', tier: 'watch',    props: 11, sources: 29, alert: null },
+  'Michigan':       { abbr: 'mi', tier: 'ready',    props: 8,  sources: 21, alert: null },
+  'Minnesota':      { abbr: 'mn', tier: 'ready',    props: 4,  sources: 9,  alert: null },
+  'New Hampshire':  { abbr: 'nh', tier: 'ready',    props: 3,  sources: 7,  alert: null },
+  'Virginia':       { abbr: 'va', tier: 'ready',    props: 6,  sources: 14, alert: null },
 };
+
+// Reverse lookup: abbr → full name
+const abbrToName = {};
+for (const [name, d] of Object.entries(stateData)) abbrToName[d.abbr] = name;
+
+// FIPS codes for county topology filtering
+const stateFIPS = { pa:'42', az:'04', ga:'13', nc:'37', wi:'55', nv:'32', fl:'12', mi:'26', mn:'27', nh:'33', va:'51' };
+
+const stateCounties = {
+  az: ['Apache','Cochise','Coconino','Gila','Graham','Greenlee','La Paz','Maricopa','Mohave','Navajo','Pima','Pinal','Santa Cruz','Yavapai','Yuma'],
+  pa: ['Allegheny','Berks','Bucks','Chester','Cumberland','Dauphin','Delaware','Erie','Lancaster','Lehigh','Luzerne','Montgomery','Northampton','Philadelphia','York'],
+  ga: ['Bibb','Cherokee','Clayton','Cobb','DeKalb','Floyd','Forsyth','Fulton','Gwinnett','Hall','Henry','Houston','Muscogee','Richmond','Whitfield'],
+  nc: ['Buncombe','Cabarrus','Catawba','Cumberland','Durham','Forsyth','Gaston','Guilford','Johnston','Mecklenburg','New Hanover','Onslow','Pitt','Randolph','Wake'],
+  wi: ['Brown','Dane','Dodge','Fond du Lac','Kenosha','La Crosse','Marathon','Milwaukee','Outagamie','Racine','Rock','Sheboygan','Waukesha','Winnebago','Wood'],
+  nv: ['Carson City','Churchill','Clark','Douglas','Elko','Humboldt','Lander','Lincoln','Lyon','Mineral','Nye','Pershing','Storey','Washoe','White Pine'],
+  fl: ['Alachua','Brevard','Broward','Duval','Escambia','Hillsborough','Lee','Leon','Manatee','Miami-Dade','Orange','Palm Beach','Pinellas','Polk','Sarasota'],
+  mi: ['Bay','Calhoun','Clinton','Genesee','Ingham','Jackson','Kalamazoo','Kent','Macomb','Monroe','Muskegon','Oakland','Ottawa','Saginaw','Wayne'],
+  mn: ['Anoka','Blue Earth','Dakota','Hennepin','Olmsted','Ramsey','Scott','Sherburne','St. Louis','Stearns','Washington','Wright'],
+  nh: ['Belknap','Carroll','Cheshire','Coos','Grafton','Hillsborough','Merrimack','Rockingham','Strafford','Sullivan'],
+  va: ['Arlington','Augusta','Chesterfield','Fairfax','Loudoun','Prince William','Roanoke','Spotsylvania','Virginia Beach','Henrico'],
+};
+
+const sampleProps = [
+  { id:'PROP-1', title:'Statewide Affordable Housing Bond Act', type:'statewide', typeLabel:'Statewide', summary:'Authorizes the state to borrow $10B for affordable housing construction and repair, repaid over 30 years. Supporters cite the housing shortage; opponents flag the long-term debt burden.', grade:5.2, coverage:14 },
+  { id:'PROP-2', title:'Constitutional Amendment: Voter ID Requirement', type:'statewide', typeLabel:'Statewide', summary:'Adds a government-issued photo ID requirement to the state constitution. A no vote keeps the current signature alternative for voters without ID.', grade:6.1, coverage:22 },
+  { id:'LOCAL-1', title:'County Library Millage Renewal', type:'local', typeLabel:'Local measure', summary:'Renews (does not increase) an existing property tax funding county libraries for 10 more years. Failure would trigger significant branch closures.', grade:4.8, coverage:3 },
+  { id:'RACE-1', title:'County Commissioner, District 3', type:'candidate', typeLabel:'Candidate race', summary:'4-year term. Commissioner votes on county budget, zoning, and local services.', grade:4.2, coverage:5 },
+];
 
 const tierColor = { priority: '#C94A22', watch: '#C07A12', ready: '#1D9E75' };
 const tierLabel = { priority: 'Priority battleground', watch: 'Watch state', ready: 'Data ready' };
 
+// ── State ─────────────────────────────────────────────────────────────────────
+
 let currentFilter = 'battleground';
 let mapPaths = null;
+let countyPaths = null;
+let countyTopoCache = null;
+let currentStateAbbr = null;
+
+// ── National map ──────────────────────────────────────────────────────────────
 
 const svg = d3.select('#usmap');
 const g = svg.append('g');
-
 const projection = d3.geoAlbersUsa().scale(1100).translate([480, 280]);
 const path = d3.geoPath(projection);
 
@@ -540,11 +830,187 @@ d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
       document.getElementById('tooltip').style.display = 'none';
     })
     .on('click', function(event, d) {
-      if (stateData[d.properties.name]) {
-        alert('Opening ballot view for ' + d.properties.name + '…\n\n(In the real product this would load the full proposition list for this state.)');
-      }
+      const info = stateData[d.properties.name];
+      if (info) navigateState(info.abbr);
     });
 });
+
+// ── County map ────────────────────────────────────────────────────────────────
+
+async function loadCountyMap(abbr) {
+  const fips = stateFIPS[abbr];
+  if (!fips) return;
+
+  if (!countyTopoCache) {
+    countyTopoCache = await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json');
+  }
+
+  const allCounties = topojson.feature(countyTopoCache, countyTopoCache.objects.counties).features;
+  const stateFeatures = allCounties.filter(d => d.id.toString().startsWith(fips));
+
+  const countySvg = d3.select('#countymap');
+  countySvg.selectAll('*').remove();
+  const cg = countySvg.append('g');
+
+  // Fit projection to this state's counties
+  const countyProjection = d3.geoAlbersUsa().fitSize([920, 540], { type: 'FeatureCollection', features: stateFeatures });
+  const countyPath = d3.geoPath(countyProjection);
+
+  countyPaths = cg.selectAll('path')
+    .data(stateFeatures)
+    .join('path')
+    .attr('d', countyPath)
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 0.8)
+    .attr('fill', '#1D9E75')
+    .attr('opacity', 0.6)
+    .style('cursor', 'pointer')
+    .on('mousemove', function(event, d) {
+      d3.select(this).attr('opacity', 0.9);
+    })
+    .on('mouseleave', function() {
+      d3.select(this).attr('opacity', 0.6);
+    })
+    .on('click', function(event, d) {
+      // Match topology county name to our county list by position
+      const counties = stateCounties[abbr] || [];
+      const idx = stateFeatures.indexOf(d);
+      const countyName = counties[idx] || ('County ' + d.id);
+      openCountySidebar(abbr, countyName);
+    });
+}
+
+// ── Routing ───────────────────────────────────────────────────────────────────
+
+function navigateState(abbr) {
+  window.location.hash = '/' + abbr;
+}
+
+function navigateHome() {
+  window.location.hash = '/';
+}
+
+function dispatch() {
+  const hash = window.location.hash.replace(/^#\/?/, '');
+  const parts = hash.split('/').filter(Boolean);
+  const abbr = parts[0] || null;
+
+  if (abbr && stateCounties[abbr]) {
+    showStateView(abbr);
+  } else {
+    showNationalView();
+  }
+}
+
+function showNationalView() {
+  currentStateAbbr = null;
+  document.getElementById('county-map-panel').classList.remove('active');
+  document.getElementById('breadcrumb-bar').classList.add('hidden');
+  document.getElementById('county-list-section').style.display = 'none';
+  document.getElementById('state-list-section').style.display = 'block';
+  closeCountySidebar();
+}
+
+function showStateView(abbr) {
+  currentStateAbbr = abbr;
+  const stateName = abbrToName[abbr] || abbr.toUpperCase();
+
+  // Breadcrumb
+  document.getElementById('bc-state').textContent = stateName;
+  document.getElementById('breadcrumb-bar').classList.remove('hidden');
+
+  // Swap sidebar to county list
+  document.getElementById('state-list-section').style.display = 'none';
+  document.getElementById('county-list-label').textContent = stateName + ' Counties';
+  renderCountyList(abbr);
+  document.getElementById('county-list-section').style.display = 'block';
+
+  // Show county map overlay
+  document.getElementById('county-map-panel').classList.add('active');
+  loadCountyMap(abbr);
+
+  closeCountySidebar();
+}
+
+// ── County list in sidebar ────────────────────────────────────────────────────
+
+function renderCountyList(abbr) {
+  const counties = stateCounties[abbr] || [];
+  const container = document.getElementById('county-list-rows');
+  container.innerHTML = '';
+  counties.forEach(county => {
+    const row = document.createElement('div');
+    row.className = 'county-list-row';
+    row.innerHTML = `<span class="county-list-name">${county} County</span><span class="county-list-arrow">›</span>`;
+    row.addEventListener('click', () => openCountySidebar(abbr, county));
+    container.appendChild(row);
+  });
+}
+
+// County search filter
+document.getElementById('county-search-input').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.county-list-row').forEach(row => {
+    const name = row.querySelector('.county-list-name').textContent.toLowerCase();
+    row.style.display = name.includes(q) ? 'flex' : 'none';
+  });
+});
+
+// ── County ballot sidebar ─────────────────────────────────────────────────────
+
+function openCountySidebar(abbr, countyName) {
+  const stateName = abbrToName[abbr] || abbr.toUpperCase();
+  const countySlug = countyName.toLowerCase().replace(/\s+/g, '-');
+
+  document.getElementById('cs-county-name').textContent = countyName + ' County';
+  document.getElementById('cs-state-name').textContent = stateName + ' · Nov 2026 General';
+  document.getElementById('cs-voter-link').href = 'index.html#/' + abbr + '/' + countySlug;
+
+  const body = document.getElementById('cs-body');
+  body.innerHTML = '';
+
+  sampleProps.forEach(prop => {
+    const card = document.createElement('div');
+    card.className = 'j-prop-card';
+    card.innerHTML = `
+      <div class="j-prop-meta">
+        <span class="j-prop-id">${prop.id}</span>
+        <span class="j-type-badge j-type-${prop.type}">${prop.typeLabel}</span>
+      </div>
+      <div class="j-prop-title">${prop.title}</div>
+      <div class="j-prop-summary">${prop.summary}</div>
+      <div class="j-prop-footer">
+        <select class="stance-select" aria-label="Stance signal">
+          <option value="">Stance…</option>
+          <option>Pro</option>
+          <option>Against</option>
+          <option>Neutral</option>
+          <option>Unclear</option>
+        </select>
+        <span class="coverage-count">${prop.coverage} sources</span>
+        <a class="j-voter-link" href="index.html#/${abbr}/${countySlug}" target="_blank">Voter view ›</a>
+      </div>
+    `;
+    body.appendChild(card);
+  });
+
+  document.getElementById('county-sidebar').classList.add('open');
+}
+
+function closeCountySidebar() {
+  document.getElementById('county-sidebar').classList.remove('open');
+}
+
+document.getElementById('cs-close').addEventListener('click', closeCountySidebar);
+
+// ── Breadcrumb home link ──────────────────────────────────────────────────────
+
+document.getElementById('bc-home').addEventListener('click', e => {
+  e.preventDefault();
+  navigateHome();
+});
+
+// ── Filter buttons ────────────────────────────────────────────────────────────
 
 function setFilter(f, btn) {
   currentFilter = f;
@@ -559,9 +1025,10 @@ function setFilter(f, btn) {
   }
 }
 
-function zoomState(name) {
-  alert('Opening ballot view for ' + name + '…\n\n(In the real product this would load the full proposition list for this state.)');
-}
+// ── Boot ──────────────────────────────────────────────────────────────────────
+
+window.addEventListener('hashchange', dispatch);
+dispatch();
 </script>
 </body>
 </html>
