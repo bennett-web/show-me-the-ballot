@@ -581,6 +581,11 @@ body {
   50% { opacity: 0.5; }
 }
 
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
 .error-state {
   text-align: center;
   padding: 2rem 1rem;

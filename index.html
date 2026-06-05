@@ -102,6 +102,15 @@
 </div>
 
 <!-- ── County ballot view ── -->
+<div id="scroll-hint" hidden style="
+  text-align: center;
+  padding: 1.5rem 0 0.5rem;
+  animation: bounce 1.4s ease-in-out infinite;
+">
+  <span style="font-size:1.25rem; color:var(--color-ready);">↓</span>
+  <p style="font-size:0.75rem; font-family:var(--font-mono); color:var(--color-text-3); text-transform:uppercase; letter-spacing:0.08em; margin-top:0.25rem;">Your ballot is below</p>
+</div>
+
 <div id="view-ballot" class="ballot-page" hidden>
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="#/" data-i18n="nav-home">Home</a>
@@ -481,6 +490,7 @@ function rerenderCard(propId) {
 // ── Route handlers ────────────────────────────────────────────────────────────
 Router.on('', () => {
   showView('view-home');
+  document.getElementById('scroll-hint').hidden = true;
   document.title = 'Show Me The Ballot';
 });
 
@@ -521,6 +531,12 @@ Router.on(':state/:county', ({ state, county }) => {
 
   renderBallot(state, county);
   showView('view-ballot');
+  // Show scroll hint and auto-scroll to ballot
+  const hint = document.getElementById('scroll-hint');
+  hint.hidden = false;
+  setTimeout(() => {
+    document.getElementById('view-ballot').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 });
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
