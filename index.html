@@ -532,11 +532,12 @@ Router.on(':state/:county', ({ state, county }) => {
   renderBallot(state, county);
   showView('view-ballot');
   // Show scroll hint and auto-scroll to ballot
-  const hint = document.getElementById('scroll-hint');
-  hint.hidden = false;
+  document.getElementById('scroll-hint').hidden = false;
+  // Blur the search input first so mobile keyboard dismisses, then scroll
+  document.getElementById('county-search').blur();
   setTimeout(() => {
-    document.getElementById('view-ballot').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 200);
 });
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
