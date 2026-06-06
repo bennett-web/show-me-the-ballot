@@ -266,14 +266,23 @@ const i18n = {
 
 // ── Sample data (replace with Airtable fetch) ─────────────────────────────────
 const statesMeta = {
-  az: { name: 'Arizona', counties: ['Apache','Cochise','Coconino','Gila','Graham','Greenlee','La Paz','Maricopa','Mohave','Navajo','Pima','Pinal','Santa Cruz','Yavapai','Yuma'] },
-  pa: { name: 'Pennsylvania', counties: ['Allegheny','Berks','Bucks','Chester','Cumberland','Dauphin','Delaware','Erie','Lancaster','Lehigh','Luzerne','Montgomery','Northampton','Philadelphia','York'] },
-  ga: { name: 'Georgia', counties: ['Bibb','Cherokee','Clayton','Cobb','DeKalb','Floyd','Forsyth','Fulton','Gwinnett','Hall','Henry','Houston','Muscogee','Richmond','Whitfield'] },
+  // Priority states
+  mi: { name: 'Michigan',       counties: ['Bay','Calhoun','Clinton','Genesee','Ingham','Jackson','Kalamazoo','Kent','Macomb','Monroe','Muskegon','Oakland','Ottawa','Saginaw','Washtenaw','Wayne'] },
+  ga: { name: 'Georgia',        counties: ['Bibb','Cherokee','Clayton','Cobb','DeKalb','Floyd','Forsyth','Fulton','Gwinnett','Hall','Henry','Houston','Muscogee','Richmond','Whitfield'] },
+  wi: { name: 'Wisconsin',      counties: ['Brown','Dane','Dodge','Fond du Lac','Kenosha','La Crosse','Marathon','Milwaukee','Outagamie','Racine','Rock','Sheboygan','Waukesha','Winnebago','Wood'] },
   nc: { name: 'North Carolina', counties: ['Buncombe','Cabarrus','Catawba','Cumberland','Durham','Forsyth','Gaston','Guilford','Johnston','Mecklenburg','New Hanover','Onslow','Pitt','Randolph','Wake'] },
-  wi: { name: 'Wisconsin', counties: ['Brown','Dane','Dodge','Fond du Lac','Kenosha','La Crosse','Marathon','Milwaukee','Outagamie','Racine','Rock','Sheboygan','Waukesha','Winnebago','Wood'] },
-  nv: { name: 'Nevada', counties: ['Carson City','Churchill','Clark','Douglas','Elko','Humboldt','Lander','Lincoln','Lyon','Mineral','Nye','Pershing','Storey','Washoe','White Pine'] },
-  fl: { name: 'Florida', counties: ['Alachua','Brevard','Broward','Duval','Escambia','Hillsborough','Lee','Leon','Manatee','Miami-Dade','Orange','Palm Beach','Pinellas','Polk','Sarasota'] },
-  mi: { name: 'Michigan', counties: ['Bay','Calhoun','Clinton','Genesee','Ingham','Jackson','Kalamazoo','Kent','Macomb','Monroe','Muskegon','Oakland','Ottawa','Saginaw','Washtenaw','Wayne'] },
+  az: { name: 'Arizona',        counties: ['Apache','Cochise','Coconino','Gila','Graham','Greenlee','La Paz','Maricopa','Mohave','Navajo','Pima','Pinal','Santa Cruz','Yavapai','Yuma'] },
+  pa: { name: 'Pennsylvania',   counties: ['Allegheny','Berks','Bucks','Chester','Cumberland','Dauphin','Delaware','Erie','Lancaster','Lehigh','Luzerne','Montgomery','Northampton','Philadelphia','York'] },
+  // Watch states
+  nv: { name: 'Nevada',         counties: ['Carson City','Churchill','Clark','Douglas','Elko','Humboldt','Lander','Lincoln','Lyon','Mineral','Nye','Pershing','Storey','Washoe','White Pine'] },
+  nh: { name: 'New Hampshire',  counties: ['Belknap','Carroll','Cheshire','Coos','Grafton','Hillsborough','Merrimack','Rockingham','Strafford','Sullivan'] },
+  oh: { name: 'Ohio',           counties: ['Cuyahoga','Delaware','Franklin','Hamilton','Lake','Lorain','Lucas','Mahoning','Montgomery','Stark','Summit','Trumbull','Warren','Wayne'] },
+  ia: { name: 'Iowa',           counties: ['Black Hawk','Dallas','Dubuque','Johnson','Linn','Polk','Pottawattamie','Scott','Story','Woodbury'] },
+  ak: { name: 'Alaska',         counties: ['Anchorage','Fairbanks North Star','Juneau','Kenai Peninsula','Matanuska-Susitna','Sitka'] },
+  me: { name: 'Maine',          counties: ['Androscoggin','Aroostook','Cumberland','Franklin','Hancock','Kennebec','Knox','Lincoln','Oxford','Penobscot','Piscataquis','Sagadahoc','Somerset','Waldo','Washington','York'] },
+  tx: { name: 'Texas',          counties: ['Bexar','Cameron','Collin','Dallas','Denton','El Paso','Fort Bend','Harris','Hidalgo','Montgomery','Tarrant','Travis','Williamson'] },
+  fl: { name: 'Florida',        counties: ['Alachua','Brevard','Broward','Duval','Escambia','Hillsborough','Lee','Leon','Manatee','Miami-Dade','Orange','Palm Beach','Pinellas','Polk','Sarasota'] },
+  ks: { name: 'Kansas',         counties: ['Douglas','Johnson','Sedgwick','Shawnee','Wyandotte'] },
 };
 
 const sampleProps = [

@@ -639,7 +639,7 @@
 
   <div class="stats-bar">
     <div class="stat-cell">
-      <span class="stat-num">14</span>
+      <span class="stat-num">15</span>
       <span class="stat-desc">States with<br>ballot data</span>
     </div>
     <div class="stat-cell">
@@ -705,19 +705,11 @@
 
     <div class="sidebar-section" id="state-list-section">
       <p class="section-label">Priority states</p>
-      <div class="state-row" onclick="navigateState('pa')">
+      <div class="state-row" onclick="navigateState('mi')">
         <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
-          <div class="state-name">Pennsylvania</div>
-          <div class="state-meta">12 props · 38 sources</div>
-        </div>
-        <span class="state-badge badge-priority">Priority</span>
-      </div>
-      <div class="state-row" onclick="navigateState('az')">
-        <div class="state-tier-dot dot-priority"></div>
-        <div class="state-info">
-          <div class="state-name">Arizona</div>
-          <div class="state-meta">9 props · 24 sources</div>
+          <div class="state-name">Michigan</div>
+          <div class="state-meta">8 props · 21 sources</div>
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
@@ -729,6 +721,14 @@
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
+      <div class="state-row" onclick="navigateState('wi')">
+        <div class="state-tier-dot dot-priority"></div>
+        <div class="state-info">
+          <div class="state-name">Wisconsin</div>
+          <div class="state-meta">6 props · 15 sources</div>
+        </div>
+        <span class="state-badge badge-priority">Priority</span>
+      </div>
       <div class="state-row" onclick="navigateState('nc')">
         <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
@@ -737,19 +737,75 @@
         </div>
         <span class="state-badge badge-priority">Priority</span>
       </div>
-      <div class="state-row" onclick="navigateState('wi')">
-        <div class="state-tier-dot dot-watch"></div>
+      <div class="state-row" onclick="navigateState('az')">
+        <div class="state-tier-dot dot-priority"></div>
         <div class="state-info">
-          <div class="state-name">Wisconsin</div>
-          <div class="state-meta">6 props · 15 sources</div>
+          <div class="state-name">Arizona</div>
+          <div class="state-meta">9 props · 24 sources</div>
         </div>
-        <span class="state-badge badge-watch">Watch</span>
+        <span class="state-badge badge-priority">Priority</span>
+      </div>
+      <div class="state-row" onclick="navigateState('pa')">
+        <div class="state-tier-dot dot-priority"></div>
+        <div class="state-info">
+          <div class="state-name">Pennsylvania</div>
+          <div class="state-meta">12 props · 38 sources</div>
+        </div>
+        <span class="state-badge badge-priority">Priority</span>
       </div>
       <div class="state-row" onclick="navigateState('nv')">
         <div class="state-tier-dot dot-watch"></div>
         <div class="state-info">
           <div class="state-name">Nevada</div>
           <div class="state-meta">5 props · 11 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="navigateState('nh')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">New Hampshire</div>
+          <div class="state-meta">3 props · 7 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="navigateState('oh')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Ohio</div>
+          <div class="state-meta">6 props · 14 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="navigateState('ia')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Iowa</div>
+          <div class="state-meta">4 props · 9 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="navigateState('ak')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Alaska</div>
+          <div class="state-meta">2 props · 5 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="navigateState('me')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Maine</div>
+          <div class="state-meta">3 props · 6 sources</div>
+        </div>
+        <span class="state-badge badge-watch">Watch</span>
+      </div>
+      <div class="state-row" onclick="navigateState('tx')">
+        <div class="state-tier-dot dot-watch"></div>
+        <div class="state-info">
+          <div class="state-name">Texas</div>
+          <div class="state-meta">8 props · 18 sources</div>
         </div>
         <span class="state-badge badge-watch">Watch</span>
       </div>
@@ -761,13 +817,13 @@
         </div>
         <span class="state-badge badge-watch">Watch</span>
       </div>
-      <div class="state-row" onclick="navigateState('mi')">
-        <div class="state-tier-dot dot-ready"></div>
+      <div class="state-row" onclick="navigateState('ks')">
+        <div class="state-tier-dot dot-watch"></div>
         <div class="state-info">
-          <div class="state-name">Michigan</div>
-          <div class="state-meta">8 props · 21 sources</div>
+          <div class="state-name">Kansas</div>
+          <div class="state-meta">3 props · 7 sources</div>
         </div>
-        <span class="state-badge badge-ready">Data ready</span>
+        <span class="state-badge badge-watch">Watch</span>
       </div>
     </div>
 
@@ -834,17 +890,23 @@
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const stateData = {
-  'Pennsylvania':   { abbr: 'pa', tier: 'priority', props: 12, sources: 38, alert: 'Coverage spike today' },
-  'Arizona':        { abbr: 'az', tier: 'priority', props: 9,  sources: 24, alert: null },
+  // Priority — Senate and/or Governor toss-up/lean (2026 midterms)
+  'Michigan':       { abbr: 'mi', tier: 'priority', props: 8,  sources: 21, alert: null },
   'Georgia':        { abbr: 'ga', tier: 'priority', props: 7,  sources: 19, alert: null },
+  'Wisconsin':      { abbr: 'wi', tier: 'priority', props: 6,  sources: 15, alert: null },
   'North Carolina': { abbr: 'nc', tier: 'priority', props: 5,  sources: 14, alert: 'New filing today' },
-  'Wisconsin':      { abbr: 'wi', tier: 'watch',    props: 6,  sources: 15, alert: null },
+  'Arizona':        { abbr: 'az', tier: 'priority', props: 9,  sources: 24, alert: null },
+  'Pennsylvania':   { abbr: 'pa', tier: 'priority', props: 12, sources: 38, alert: 'Coverage spike today' },
+  // Watch
   'Nevada':         { abbr: 'nv', tier: 'watch',    props: 5,  sources: 11, alert: null },
+  'New Hampshire':  { abbr: 'nh', tier: 'watch',    props: 3,  sources: 7,  alert: null },
+  'Ohio':           { abbr: 'oh', tier: 'watch',    props: 6,  sources: 14, alert: null },
+  'Iowa':           { abbr: 'ia', tier: 'watch',    props: 4,  sources: 9,  alert: null },
+  'Alaska':         { abbr: 'ak', tier: 'watch',    props: 2,  sources: 5,  alert: null },
+  'Maine':          { abbr: 'me', tier: 'watch',    props: 3,  sources: 6,  alert: null },
+  'Texas':          { abbr: 'tx', tier: 'watch',    props: 8,  sources: 18, alert: null },
   'Florida':        { abbr: 'fl', tier: 'watch',    props: 11, sources: 29, alert: null },
-  'Michigan':       { abbr: 'mi', tier: 'ready',    props: 8,  sources: 21, alert: null },
-  'Minnesota':      { abbr: 'mn', tier: 'ready',    props: 4,  sources: 9,  alert: null },
-  'New Hampshire':  { abbr: 'nh', tier: 'ready',    props: 3,  sources: 7,  alert: null },
-  'Virginia':       { abbr: 'va', tier: 'ready',    props: 6,  sources: 14, alert: null },
+  'Kansas':         { abbr: 'ks', tier: 'watch',    props: 3,  sources: 7,  alert: null },
 };
 
 // Reverse lookup: abbr → full name
@@ -852,20 +914,29 @@ const abbrToName = {};
 for (const [name, d] of Object.entries(stateData)) abbrToName[d.abbr] = name;
 
 // FIPS codes for county topology filtering
-const stateFIPS = { pa:'42', az:'04', ga:'13', nc:'37', wi:'55', nv:'32', fl:'12', mi:'26', mn:'27', nh:'33', va:'51' };
+const stateFIPS = {
+  pa:'42', az:'04', ga:'13', nc:'37', wi:'55', nv:'32', fl:'12', mi:'26',
+  nh:'33', oh:'39', ia:'19', ak:'02', me:'23', tx:'48', ks:'20',
+};
 
 const stateCounties = {
+  // Priority states
+  mi: ['Bay','Calhoun','Clinton','Genesee','Ingham','Jackson','Kalamazoo','Kent','Macomb','Monroe','Muskegon','Oakland','Ottawa','Saginaw','Washtenaw','Wayne'],
+  ga: ['Bibb','Cherokee','Clayton','Cobb','DeKalb','Floyd','Forsyth','Fulton','Gwinnett','Hall','Henry','Houston','Muscogee','Richmond','Whitfield'],
+  wi: ['Brown','Dane','Dodge','Fond du Lac','Kenosha','La Crosse','Marathon','Milwaukee','Outagamie','Racine','Rock','Sheboygan','Waukesha','Winnebago','Wood'],
+  nc: ['Buncombe','Cabarrus','Catawba','Cumberland','Durham','Forsyth','Gaston','Guilford','Johnston','Mecklenburg','New Hanover','Onslow','Pitt','Randolph','Wake'],
   az: ['Apache','Cochise','Coconino','Gila','Graham','Greenlee','La Paz','Maricopa','Mohave','Navajo','Pima','Pinal','Santa Cruz','Yavapai','Yuma'],
   pa: ['Allegheny','Berks','Bucks','Chester','Cumberland','Dauphin','Delaware','Erie','Lancaster','Lehigh','Luzerne','Montgomery','Northampton','Philadelphia','York'],
-  ga: ['Bibb','Cherokee','Clayton','Cobb','DeKalb','Floyd','Forsyth','Fulton','Gwinnett','Hall','Henry','Houston','Muscogee','Richmond','Whitfield'],
-  nc: ['Buncombe','Cabarrus','Catawba','Cumberland','Durham','Forsyth','Gaston','Guilford','Johnston','Mecklenburg','New Hanover','Onslow','Pitt','Randolph','Wake'],
-  wi: ['Brown','Dane','Dodge','Fond du Lac','Kenosha','La Crosse','Marathon','Milwaukee','Outagamie','Racine','Rock','Sheboygan','Waukesha','Winnebago','Wood'],
+  // Watch states
   nv: ['Carson City','Churchill','Clark','Douglas','Elko','Humboldt','Lander','Lincoln','Lyon','Mineral','Nye','Pershing','Storey','Washoe','White Pine'],
-  fl: ['Alachua','Brevard','Broward','Duval','Escambia','Hillsborough','Lee','Leon','Manatee','Miami-Dade','Orange','Palm Beach','Pinellas','Polk','Sarasota'],
-  mi: ['Bay','Calhoun','Clinton','Genesee','Ingham','Jackson','Kalamazoo','Kent','Macomb','Monroe','Muskegon','Oakland','Ottawa','Saginaw','Wayne'],
-  mn: ['Anoka','Blue Earth','Dakota','Hennepin','Olmsted','Ramsey','Scott','Sherburne','St. Louis','Stearns','Washington','Wright'],
   nh: ['Belknap','Carroll','Cheshire','Coos','Grafton','Hillsborough','Merrimack','Rockingham','Strafford','Sullivan'],
-  va: ['Arlington','Augusta','Chesterfield','Fairfax','Loudoun','Prince William','Roanoke','Spotsylvania','Virginia Beach','Henrico'],
+  oh: ['Cuyahoga','Delaware','Franklin','Hamilton','Lake','Lorain','Lucas','Mahoning','Montgomery','Stark','Summit','Trumbull','Warren','Wayne'],
+  ia: ['Black Hawk','Dallas','Dubuque','Johnson','Linn','Polk','Pottawattamie','Scott','Story','Woodbury'],
+  ak: ['Anchorage','Fairbanks North Star','Juneau','Kenai Peninsula','Matanuska-Susitna','Sitka'],
+  me: ['Androscoggin','Aroostook','Cumberland','Franklin','Hancock','Kennebec','Knox','Lincoln','Oxford','Penobscot','Piscataquis','Sagadahoc','Somerset','Waldo','Washington','York'],
+  tx: ['Bexar','Cameron','Collin','Dallas','Denton','El Paso','Fort Bend','Harris','Hidalgo','Montgomery','Tarrant','Travis','Williamson'],
+  fl: ['Alachua','Brevard','Broward','Duval','Escambia','Hillsborough','Lee','Leon','Manatee','Miami-Dade','Orange','Palm Beach','Pinellas','Polk','Sarasota'],
+  ks: ['Douglas','Johnson','Sedgwick','Shawnee','Wyandotte'],
 };
 
 const sampleProps = [
